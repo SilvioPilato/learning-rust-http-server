@@ -44,9 +44,10 @@ impl<'buf> TryFrom<&'buf[u8]> for Request<'buf> {
         if let Some(i) = raw_headers.find("\r\n\r\n") {
             headers = Some(Headers::from(&raw_headers[..i]));
             if let Some(j) = raw_headers[i+4..].find("\0") {
-                body = match j + 4 {
-                    i => None,
-                    _ => Some(&raw_headers[i+4..j]),
+                if j > 0 {
+                    body = Some(&raw_headers[i+4..i+4+j]);
+                } else {
+                    body = None;
                 }
             }
         }

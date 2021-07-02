@@ -1,4 +1,3 @@
-use std::time::UNIX_EPOCH;
 use std::time::SystemTime;
 use crate::WebsiteHandler;
 use std::net::TcpStream;
@@ -32,8 +31,8 @@ impl Server {
         loop {
             match listener.accept() {
                 Ok((stream, _)) => {
+                    let start = SystemTime::now();
                     std::thread::spawn(move || {
-                        let start = SystemTime::now();
                         let default_path = format!("{}/public", env!("CARGO_MANIFEST_DIR"));
                         let public_path = env::var("PUBLIC_PATH").unwrap_or(default_path);
                         self.handle_connection(stream, &mut WebsiteHandler::new(public_path));

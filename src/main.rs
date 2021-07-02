@@ -2,7 +2,6 @@
 
 use crate::website_handler::WebsiteHandler;
 use server::Server;
-use std::env;
 
 mod server;
 mod http;

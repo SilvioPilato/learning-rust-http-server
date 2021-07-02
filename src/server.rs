@@ -39,11 +39,9 @@ impl Server {
                         self.handle_connection(stream, &mut WebsiteHandler::new(public_path));
                         match start.elapsed() {
                             Ok(elapsed) => {
-                                // it prints '2'
                                 println!("Request served in {} ms", elapsed.as_millis());
                             }
                             Err(e) => {
-                                // an error occurred!
                                 println!("Error: {:?}", e);
                             }
                         }
